@@ -11,17 +11,28 @@ module.exports = {
     jest: true,
     node: true,
   },
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     allowImportExportEverywhere: true,
+    ecmaVersion: 2022,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
-  extends: ['airbnb', 'prettier'],
+  extends: [
+    'airbnb',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'prettier',
+    'prettier/prettier',
+  ],
   plugins: ['react-hooks'],
   rules: {
-    'import/extensions': OFF,
-    'react/jsx-closing-bracket-location': OFF, // Conflicts with Prettier.
+    // Keeping function-component-definition off for now:
+    // https://github.com/airbnb/javascript/issues/2505
+    'react/function-component-definition': OFF,
     'react/jsx-filename-extension': OFF,
     'react-hooks/rules-of-hooks': ERROR,
-    'react/prop-types': OFF, // PropTypes aren't used much these days.
   },
 };
