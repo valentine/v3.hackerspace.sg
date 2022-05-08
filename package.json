@@ -1,11 +1,13 @@
 {
   "name": "hackerspacesg",
-  "version": "1.0.0",
+  "version": "3.0.0",
+  "license": "AGPL-3.0-or-later",
   "private": true,
-  "description": "hackerspacesg",
-  "author": "Valentine C",
+  "description": "HackerspaceSG's main website",
   "keywords": [
-    "gatsby"
+    "website",
+    "hackerspace",
+    "singapore"
   ],
   "scripts": {
     "develop": "gatsby develop",
@@ -36,5 +38,17 @@
     "@types/react": "^17.0.44",
     "@types/react-dom": "^17.0.16",
     "typescript": "^4.6.4"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
