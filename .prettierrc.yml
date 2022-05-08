@@ -1,0 +1,5 @@
+arrowParens: always
+bracketSameLine: true
+printWidth: 80
+singleQuote: true
+trailingComma: all
