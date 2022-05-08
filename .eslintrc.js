@@ -27,6 +27,20 @@ module.exports = {
     'prettier',
     'prettier/prettier',
   ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'airbnb-typescript',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+        'prettier/prettier',
+      ],
+      parserOptions: {
+        project: ['./tsconfig.json'], // Specify it only for TypeScript files
+      },
+    },
+  ],
   plugins: ['react-hooks'],
   rules: {
     // Keeping function-component-definition off for now:
