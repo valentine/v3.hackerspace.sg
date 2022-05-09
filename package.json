@@ -22,8 +22,10 @@
     "format:diff": "prettier --config .prettierrc.yml --list-different \"**/*.{js,jsx,ts,tsx,md,mdx}\""
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.1",
     "@mdx-js/mdx": "v1",
     "@mdx-js/react": "v1",
+    "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.7",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "gatsby": "^4.13.1",
