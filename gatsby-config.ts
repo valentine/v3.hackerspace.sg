@@ -16,7 +16,15 @@ const config: GatsbyConfig = {
       },
     },
     'gatsby-plugin-mdx',
-    'gatsby-plugin-sharp',
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          placeholder: `blurred`,
+          quality: 70,
+        },
+      },
+    },
     'gatsby-transformer-sharp',
     'gatsby-plugin-postcss',
     {
