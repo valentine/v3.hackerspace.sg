@@ -1,12 +1,16 @@
-import { StaticImage } from 'gatsby-plugin-image';
 import * as React from 'react';
+import { StaticImage } from 'gatsby-plugin-image';
+import { Header } from '../components/layout';
+import Hero from '../modules/index/hero'
 
 const IndexPage = () => {
   return (
-    <StaticImage
-      alt="Group photo with a HackerspaceSG logo and Mitch Altman in December 2014"
-      src="../images/hero-mitch.jpg"
-    />
+    <main>
+      <Header />
+      <Hero />
+      <Hero />
+      <Hero />
+    </main>
   );
 };
 
