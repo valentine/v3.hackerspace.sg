@@ -1,36 +1,14 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { parseICS } from '@/utils/iCalParser.ts';
+import { fetchAndParseEvents, filterUpcomingEvents } from '@/utils/iCalParser.ts';
 import {
   formatSGTDateTime,
   isTentative,
   getEmoji,
 } from '@/utils/eventHelpers.ts';
-import { iCalUrl } from '@/config.index.ts';
 
-interface CalendarEvent {
-  summary: string;
-  start: Date;
-  end: Date;
-  description?: string;
-  url?: string;
-}
-
-let events: CalendarEvent[] = [];
-
-try {
-  const res = await fetch(iCalUrl);
-  if (res.ok) {
-    const icalData = await res.text();
-    events = parseICS(icalData)
-      .filter((event) => event.start > new Date())
-      .sort((a, b) => a.start.getTime() - b.start.getTime());
-  } else {
-    console.error('Failed to fetch ical file.');
-  }
-} catch (error) {
-  console.error('Error fetching or parsing the ical file:', error);
-}
+const allEvents = await fetchAndParseEvents();
+const events = filterUpcomingEvents(allEvents);
 ---
 
 <div
@@ -102,7 +80,7 @@ try {
 </div>
 
 <script>
-  import { updateRelativeTimes } from '@/utils/eventHelpers.ts';
+  import { updateRelativeTimes } from '../../utils/eventHelpers.ts';
 
   if (typeof window !== 'undefined') {
     updateRelativeTimes();
