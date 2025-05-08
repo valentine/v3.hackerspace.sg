@@ -1,0 +1,55 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import PastEvents from '@/components/events/PastEvents.astro';
+
+export function getStaticPaths() {
+  // Generate pages for past years and current year
+  const currentYear = new Date().getFullYear();
+  const startYear = 2009; // HackerspaceSG was founded in 2009
+  
+  return Array.from(
+    { length: currentYear - startYear + 1 },
+    (_, index) => ({
+      params: { year: (startYear + index).toString() },
+    }),
+  );
+}
+
+const { year } = Astro.params;
+
+// Validate year
+const yearNum = parseInt(year);
+const currentYear = new Date().getFullYear();
+if (isNaN(yearNum) || yearNum < 2009 || yearNum > currentYear) {
+  return Astro.redirect('/2009');
+}
+---
+
+<Layout
+  title={`Events in ${year}`}
+  description={`Past events at HackerspaceSG in ${year}`}>
+  <div class="prose mx-8 my-8 md:mx-auto">
+    <h1>Past Events in {year}</h1>
+    
+    <div class="not-prose my-8">
+      <nav class="flex flex-wrap gap-2">
+        {Array.from(
+          { length: new Date().getFullYear() - 2009 + 1 },
+          (_, index) => 2009 + index,
+        ).map((y) => (
+          <a
+            href={`/events/${y}`}
+            class={`rounded px-3 py-1 text-sm ${
+              y.toString() === year
+                ? 'bg-red-600 text-white'
+                : 'bg-zinc-100 text-zinc-800 hover:bg-zinc-200 dark:bg-zinc-700 dark:text-zinc-100'
+            }`}>
+            {y}
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    <PastEvents year={year} />
+  </div>
+</Layout>

@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from 'date-fns';
 import { categoryMap } from '@/config.index';
+import { excludedEvents, eventIconMap } from '@/config.events';
 
 export function formatSGTDateTime(date: Date) {
   const dateString = new Date(
@@ -25,6 +26,12 @@ export function isTentative(title: string): boolean {
   return title.toLowerCase().includes('(tentative)');
 }
 
+export function isExcludedEvent(summary: string): boolean {
+  return excludedEvents.some(excluded =>
+    summary.toLowerCase().includes(excluded.toLowerCase())
+  );
+}
+
 function findCategoryMatch(text: string | undefined): string | undefined {
   if (!text) return undefined;
 
@@ -33,12 +40,20 @@ function findCategoryMatch(text: string | undefined): string | undefined {
   );
 }
 
+function findIconMatch(text: string | undefined): string | undefined {
+  if (!text) return undefined;
+
+  return Object.keys(eventIconMap).find((key) =>
+    text.toLowerCase().includes(key.toLowerCase()),
+  );
+}
+
 export function getEmoji(
   summary: string,
   description: string | undefined,
 ): string {
+  // First try to match category for backward compatibility
   let matchedCategory: string | undefined;
-
   const categoryMatch = description?.match(/Category:\s*([^\n]+)/i);
 
   if (categoryMatch) {
@@ -56,7 +71,19 @@ export function getEmoji(
     matchedCategory = findCategoryMatch(description);
   }
 
-  return matchedCategory ? categoryMap[matchedCategory] || '' : '';
+  if (matchedCategory) {
+    return categoryMap[matchedCategory] || '';
+  }
+
+  // If no category match, try to match event type for icon
+  let matchedIcon: string | undefined;
+  matchedIcon = findIconMatch(summary);
+
+  if (!matchedIcon) {
+    matchedIcon = findIconMatch(description);
+  }
+
+  return matchedIcon ? eventIconMap[matchedIcon] || '' : '';
 }
 
 export function updateRelativeTimes() {
