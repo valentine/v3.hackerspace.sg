@@ -1,0 +1,62 @@
+---
+interface GeoCoordinates {
+  latitude: number;
+  longitude: number;
+}
+
+interface OpeningHours {
+  '@type': 'OpeningHoursSpecification';
+  dayOfWeek: string[];
+  opens: string;
+  closes: string;
+}
+
+interface Props {
+  schemaLocationType: string | string[];
+  schemaURL: string;
+  openingHours: OpeningHours;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: string;
+  geo: GeoCoordinates;
+}
+
+const {
+  schemaLocationType,
+  schemaURL,
+  openingHours,
+  streetAddress,
+  addressLocality,
+  addressRegion,
+  postalCode,
+  addressCountry,
+  geo,
+} = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': schemaLocationType,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: streetAddress,
+    addressLocality: addressLocality,
+    addressRegion: addressRegion,
+    postalCode: postalCode,
+    addressCountry: addressCountry,
+  },
+  url: schemaURL,
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: geo.latitude,
+    longitude: geo.longitude,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    openingHours,
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema, null, 2)} />
