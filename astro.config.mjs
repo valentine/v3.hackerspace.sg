@@ -21,6 +21,9 @@ import playformInline from '@playform/inline';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://hackerspace.sg',
+  experimental: {
+    preserveScriptOrder: true,
+  },
   integrations: [react(), mdx(), icon(), sitemap(), playformInline()],
   markdown: {
     remarkPlugins: [remarkCustomHeaderId],
