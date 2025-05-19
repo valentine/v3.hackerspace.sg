@@ -14,14 +14,14 @@ import icon from 'astro-icon';
 
 import sitemap from '@astrojs/sitemap';
 
-import critters from 'astro-critters';
-
 import remarkCustomHeaderId from 'remark-custom-header-id';
+
+import playformInline from '@playform/inline';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://hackerspace.sg',
-  integrations: [react(), mdx(), icon(), sitemap(), critters({})],
+  integrations: [react(), mdx(), icon(), sitemap(), playformInline()],
   markdown: {
     remarkPlugins: [remarkCustomHeaderId],
   },
